@@ -1,53 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Approving Post...</title>
-    <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; alignItems: center; height: 100vh; margin: 0; background: #f9f9f9; }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #333; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        p { margin-top: 20px; color: #555; }
-        .container { text-align: center; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Approving…</title>
 </head>
-<body>
-    <div class="container">
-        <div class="loader" style="margin: 0 auto;"></div>
-        <p>Finalizing approval...</p>
-    </div>
+<body style="font-family:Arial; text-align:center; padding:40px;">
+  <h2>Approving blog post…</h2>
+  <p>Please wait a moment.</p>
 
-    <script>
-        // 1. Get the ID from the URL
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get("id");
+<script>
+  // Extract ID from URL
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
 
-        if (id) {
-            // 2. Send the signal to Zapier using POST
-            fetch("https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/", {
-                method: "POST",
-                body: JSON.stringify({ id: id }), // Send the ID as JSON
-                headers: { "Content-Type": "application/json" } // Tell Zapier it's JSON
-                // Note: We are NOT using 'no-cors' here because we want to know if it succeeds.
-                // If Zapier returns a CORS error, we might need 'no-cors', but standard Webhooks usually allow it.
-            })
-            .then(response => {
-                // 3. Success! Redirect to the published page
-                console.log("Zapier received the hook");
-                window.location.href = "/published/";
-            })
-            .catch(error => {
-                // 4. Network error (or blocked) - Try to redirect anyway
-                console.error("Error sending hook:", error);
-                // Optional: Redirect to error page, or just assume it worked and go to published
-                window.location.href = "/published/"; 
-            });
-        } else {
-            // No ID found? Just go to the homepage
-            window.location.href = "/";
-        }
-    </script>
+  // Send webhook request and then redirect
+  fetch("https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ id })
+  })
+  .then(() => {
+    window.location.href = "/published";
+  })
+  .catch(() => {
+    window.location.href = "/error";
+  });
+</script>
+
 </body>
 </html>
 
