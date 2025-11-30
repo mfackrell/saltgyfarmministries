@@ -4,28 +4,25 @@
   <meta charset="UTF-8">
   <title>Submitting approval...</title>
 </head>
-<body style="font-family: Arial, sans-serif; text-align:center; padding-top:60px;">
-  <h2>Approving post...</h2>
-  <p>Hang tight — almost done.</p>
+<body style="font-family:sans-serif; text-align:center; padding-top:60px;">
+  Approving post… hang tight.
 
 <script>
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
+  // payload for Zapier
   const payload = JSON.stringify({
     status: "approved",
     id: id
   });
 
-  // Fire webhook (non-blocking)
+  // fire and forget webhook call
   navigator.sendBeacon("https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/", payload);
 
-  // Redirect immediately – no waiting
-  setTimeout(() => {
-    window.location.href = "https://blog.saltyfarmministries.org/published";
-  }, 50);
+  // redirect immediately
+  window.location.href = "https://blog.saltyfarmministries.org/published";
 </script>
-
 </body>
 </html>
 
