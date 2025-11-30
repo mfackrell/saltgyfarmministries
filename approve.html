@@ -2,33 +2,36 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Approving…</title>
+  <title>Approving...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family:Arial; text-align:center; padding:40px;">
-  <h2>Approving blog post…</h2>
-  <p>Please wait a moment.</p>
+<body style="font-family: Arial, sans-serif; text-align:center; padding-top:60px;">
+
+<h2>Publishing Blog Post...</h2>
+<p>Please wait a moment.</p>
 
 <script>
-  // Extract ID from URL
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
-  // Send webhook request and then redirect
-  fetch("https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ id })
-  })
-  .then(() => {
-    window.location.href = "/published";
-  })
-  .catch(() => {
-    window.location.href = "/error";
-  });
+  // Zapier webhook URL
+  const webhookURL = "https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/";
+
+  // Build payload
+  const payload = new FormData();
+  payload.append("status", "approved");
+  payload.append("id", id);
+
+  // Send beacon request to Zapier
+  navigator.sendBeacon(webhookURL, payload);
+
+  // Allow time for Beacon to transmit
+  setTimeout(() => {
+    window.location.href = "https://blog.saltyfarmministries.org/published";
+  }, 600);
 </script>
 
 </body>
 </html>
+
 
