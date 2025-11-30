@@ -399,6 +399,63 @@
       text-decoration: underline;
       text-decoration-thickness: 1px;
     }
+
+  /* HAMBURGER */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle .bar {
+  height: 3px;
+  width: 100%;
+  background: #f9fafb;
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+
+  .nav {
+    align-items: center;
+    height: auto;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: var(--sfm-bg-dark);
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 0;
+    transform: translateY(-200%);
+    transition: transform 0.35s ease;
+  }
+
+  .nav-links.open {
+    transform: translateY(0);
+  }
+
+  .btn-donate {
+    width: 80%;
+    text-align: center;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -408,6 +465,14 @@
       <div class="nav-logo-mark">🌴</div>
       <div class="nav-title">Salty Farm Ministries</div>
     </div>
+
+      <!-- Hamburger button -->
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    
     <div class="nav-links">
       <a href="https://saltyfarmministries.org" class="nav-link">Home</a>
       <a href="https://saltyfarmministries.org/who-we-are" class="nav-link">Who We Are</a>
